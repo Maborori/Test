@@ -10,11 +10,11 @@ public class Ghost extends GameObject {
     private Image image; // Image of the ghost
     private Maze maze;
     private int dx, dy; // Movement deltas
-    private int speed = 2; // Ghost speed
+    private int speed = 6; // Ghost speed
     private Direction currentDirection; // Current movement direction
     private Direction nextDirection; // Next movement direction
     private int moveCounter; // Counter to control movement changes
-    private static final int MAX_MOVE_COUNT = 20; // Max counter before changing direction
+    private static final int MAX_MOVE_COUNT = 30; // Max counter before changing direction
     private static final int[] VALID_DIRECTIONS = {0, 90, 180, 270}; // Valid angles for directions
     private Random random; // Random number generator
     
@@ -25,6 +25,8 @@ public class Ghost extends GameObject {
         random = new Random();
         chooseRandomDirection();
     }
+
+    
     
     private void loadImage(String imagePath) {
         try {
@@ -53,6 +55,21 @@ public class Ghost extends GameObject {
     }
 
     private void move() {
+
+        int oldX = x;
+        int oldY = y;
+
+        x += dx;
+        y += dy;
+
+        Rectangle ghostRect = new Rectangle(x,y, 20, 20);
+
+        if(maze.checkWallCollision(ghostRect)){
+            x = oldX;
+            y = oldY;
+        }
+
+
         // Check if it's time to change direction
         moveCounter++;
         if (moveCounter >= MAX_MOVE_COUNT) {
@@ -80,9 +97,18 @@ public class Ghost extends GameObject {
                 break;
         }
 
-        // Update position
-        x += dx;
-        y += dy;
+        
+
+        
+        
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     private void chooseRandomDirection() {

@@ -44,19 +44,18 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void spawnGhosts() {
-    // Spawn ghosts randomly
-    for (int i = 0; i < NUM_GHOSTS; i++) {
 
-        Point spawnLocation = maze.findValidSpawnLocation(20, 14, 36);
-        if (spawnLocation != null) {
-            int x = spawnLocation.x;
-            int y = spawnLocation.y;
-        String imagePath = String.format("/images/ghost_%d.png", i);
-        Ghost ghost = new Ghost(x, y, imagePath, maze); // Adjust image path as needed
-        ghosts.add(ghost);
+    // Spawn ghosts randomly
+    int x = 522;
+    int y = 448;
+    for (int i = 0; i < NUM_GHOSTS; i++) {
+            
+            System.out.println("Spawning ghost " +i +"x: " +x + "y: " +y);
+            String imagePath = String.format("/images/ghost_%d.png", i);
+            Ghost ghost = new Ghost(x, y, imagePath, maze); // Adjust image path as needed
+            ghosts.add(ghost);
         }
     }
-}
     
 
     @Override
@@ -104,11 +103,35 @@ public class GamePanel extends JPanel implements ActionListener {
     if (maze.checkPelletCollision(pacman.getBounds())) {
         // Handle collision with pellet
     }
+
+    if(maze.allPelletsConsumed()){
+        showWinScreen();
+    }
     }
 
     public void startGame(){
         timer.start();
     }
+
+    private void showWinScreen(){
+            removeAll();
+    
+    // Add a label to display "You won!"
+            JLabel winLabel = new JLabel("Du hast gewonnen!");
+            winLabel.setForeground(Color.WHITE);
+            winLabel.setFont(new Font("Arial", Font.BOLD, 36));
+            winLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            winLabel.setVerticalAlignment(SwingConstants.CENTER);
+            add(winLabel);
+            
+            // Repaint the panel
+            revalidate();
+            repaint();
+            
+            // Stop the timer to pause the game
+            timer.stop();
+    }
+
 
     
 

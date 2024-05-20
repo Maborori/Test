@@ -10,6 +10,7 @@ public class Maze {
     private final int[][] mazeStructure;
     private final List<Rectangle> walls;
     private final List<Rectangle> pellets;
+    private final int CELL_SIZE = 36;
 
     public Maze() {
         // 0 = empty space, 1 = wall, 2 = pellet
@@ -63,40 +64,32 @@ public class Maze {
     }
 
     public boolean checkWallCollision(Rectangle rect) {
-        for (int y = 0; y < mazeStructure.length; y++){
-            for( int x = 0; x < mazeStructure[y].length; x++){
-                if(mazeStructure[y][x] == 1){
-                    for (Rectangle wall : walls) {
-                    if (rect.intersects(wall)) {
-                    return true;
-                        }
-                    } 
-                }
+        for (Rectangle wall : walls) {
+            if (rect.intersects(wall)) {
+                return true;
             }
-
         }
-
         return false;
     }
 
 
 
-    public Point findValidSpawnLocation(int mazeWidth, int mazeHeight, int cellSize) {
-        // Create a list of all available spawn locations
+    public Point findValidSpawnLocation() {
         Random random = new Random();
-        int maxAttempts = 100; // Maximum number of attempts to find a valid spawn location
-        int attempt = 0;
-
-        do {
-            int x = random.nextInt(mazeWidth);
-            int y = random.nextInt(mazeHeight);
-            if (mazeStructure[y][x] == 2) { // 2 indicates an open space
-                return new Point(x, y);
+        int maxAttempts = 100;
+    
+        for (int attempt = 0; attempt < maxAttempts; attempt++) {
+            int x = random.nextInt(mazeStructure[0].length);
+            int y = random.nextInt(mazeStructure.length);
+    
+            if (mazeStructure[y][x] == 2) { // Check if the spot is an open space
+                // Calculate the center of the open space
+                int centerX = x * CELL_SIZE + CELL_SIZE / 2;
+                int centerY = y * CELL_SIZE + CELL_SIZE / 2;
+                return new Point(centerX, centerY);
             }
-            attempt++;
-        } while (attempt < maxAttempts);
-
-        // If no valid spawn location found, return null
+        }
+        // If no valid spawn location found, return a default safe location or null
         return null;
     }
 
@@ -109,5 +102,11 @@ public class Maze {
         }
         return false;
     }
+
+    public boolean allPelletsConsumed(){
+        return pellets.isEmpty();
+        
+    }
+
 }
 
