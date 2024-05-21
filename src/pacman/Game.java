@@ -21,6 +21,8 @@ public class Game extends JFrame{
     
     // Make the window non-resizable
     frame.setResizable(false);
+
+    frame.setContentPane(new MainMenu());
     
     // Center the window on the screen
     frame.setLocationRelativeTo(null);
@@ -30,6 +32,7 @@ public class Game extends JFrame{
     
     // Start the game loop
     gamePanel.startGame();
+
 
     }
 

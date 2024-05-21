@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements ActionListener {
         spawnGhosts();
         spawnGhosts();
         lastFrameTime = System.currentTimeMillis();
-        
+
         // Add key listener for controlling Pacman
         InputHandler inputHandler = new InputHandler(pacman);
         addKeyListener(inputHandler);
@@ -49,28 +49,24 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         });
     }
-
-    private void updateDeltaTime(){
+    private void updateDeltaTime() {
         long currentTime = System.currentTimeMillis();
         deltaTime = currentTime - lastFrameTime;
         lastFrameTime = currentTime;
     }
-
     private void spawnGhosts() {
 
-    // Spawn ghosts randomly
-    int x = 520;
-    int y = 300;
-    for (int i = 0; i < NUM_GHOSTS; i++) {
-            
-            System.out.println("Spawning ghost " +i +"x: " +x + "y: " +y);
+        // Spawn ghosts randomly
+        int x = 520;
+        int y = 300;
+        for (int i = 0; i < NUM_GHOSTS; i++) {
+
+            System.out.println("Spawning ghost " + i + "x: " + x + "y: " + y);
             String imagePath = String.format("/images/ghost_%d.png", i);
             Ghost ghost = new Ghost(x, y, imagePath, maze); // Adjust image path as needed
             ghosts.add(ghost);
         }
     }
-    
-
     @Override
     protected void paintComponent(Graphics g) {
 
@@ -87,114 +83,136 @@ public class GamePanel extends JPanel implements ActionListener {
             ghost.draw(g);
         }
     }
-
-    private boolean checkPacmanGhostCollision(){
+    private boolean checkPacmanGhostCollision() {
         Rectangle pacmanBounds = pacman.getBounds();
-        for (Ghost ghost : ghosts){
+        for (Ghost ghost : ghosts) {
             Rectangle ghostBounds = ghost.getBounds();
-            if(pacmanBounds.intersects(ghostBounds)){
+            if (pacmanBounds.intersects(ghostBounds)) {
                 return true;
             }
         }
 
         return false;
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         updateGame();
         repaint();
     }
-
     private void updateGame() {
-        
+
         // Store Pacman's current position before updating
-    int oldX = pacman.getX();
-    int oldY = pacman.getY();
+        int oldX = pacman.getX();
+        int oldY = pacman.getY();
 
-    spawnTimer += deltaTime;
-    if (spawnTimer >= SPAWN_INTERVAL) {
-        spawnGhosts();
-        spawnTimer = 0; // Reset timer
-    }
+        spawnTimer += deltaTime;
+        if (spawnTimer >= SPAWN_INTERVAL) {
+            spawnGhosts();
+            spawnTimer = 0; // Reset timer
+        }
 
-    for (Ghost ghost : ghosts){
-        ghost.update();
-    }
+        for (Ghost ghost : ghosts) {
+            ghost.update();
+        }
 
-    // Update Pacman's position
-    pacman.update();
-    
-    // Check for collisions with walls
-    if (maze.checkWallCollision(pacman.getBounds())) {
-        // Restore Pacman's previous position
-        pacman.setPosition(oldX, oldY);
-    }
+        // Update Pacman's position
+        pacman.update();
 
-    // Check for collisions with pellets
-    if (maze.checkPelletCollision(pacman.getBounds())) {
-        // Handle collision with pellet
-    }
+        // Check for collisions with walls
+        if (maze.checkWallCollision(pacman.getBounds())) {
+            // Restore Pacman's previous position
+            pacman.setPosition(oldX, oldY);
+        }
 
-    if(maze.allPelletsConsumed()){
-        showWinScreen();
-    }
+        // Check for collisions with pellets
+        if (maze.checkPelletCollision(pacman.getBounds())) {
+            // Handle collision with pellet
+        }
 
-    if(checkPacmanGhostCollision()){
-        showLossScreen();
-    }
-    }
+        if (maze.allPelletsConsumed()) {
+            showWinScreen();
+        }
 
-    public void startGame(){
+        if (checkPacmanGhostCollision()) {
+            showLossScreen();
+        }
+    }
+    public void startGame() {
         timer.start();
     }
-
-    private void showWinScreen(){
-            removeAll();
-    
-    // Add a label to display "You won!"
-            JLabel winLabel = new JLabel("Du hast gewonnen!");
-            winLabel.setForeground(Color.WHITE);
-            winLabel.setFont(new Font("Arial", Font.BOLD, 36));
-            winLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            winLabel.setVerticalAlignment(SwingConstants.CENTER);
-            add(winLabel);
-            
-            // Repaint the panel
-            revalidate();
-            repaint();
-            
-            // Stop the timer to pause the game
-            timer.stop();
-    }
-
-    private void showLossScreen(){
+    private void showWinScreen() {
         removeAll();
 
-// Add a label to display "You won!"
-        JLabel lossLabel = new JLabel("Du hast verloren!");
-        lossLabel.setForeground(Color.WHITE);
-        lossLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        lossLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lossLabel.setVerticalAlignment(SwingConstants.CENTER);
-        add(lossLabel);
-        
+        // Add a label to display "You won!"
+        JLabel winLabel = new JLabel("Du hast gewonnen!");
+        winLabel.setForeground(Color.WHITE);
+        winLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        winLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        winLabel.setVerticalAlignment(SwingConstants.CENTER);
+        add(winLabel);
+
         // Repaint the panel
         revalidate();
         repaint();
-        
+
         // Stop the timer to pause the game
         timer.stop();
-}
+    }
+    private void showLossScreen() {
+        removeAll(); // Alle vorhandenen Komponenten entfernen
 
-public void restartGame(){
-    Game.main(new String[0]);
-    SwingUtilities.getWindowAncestor(this).dispose();
-}
+        // Laden der "Game Over"-Bilder
+        ImageIcon[] gameOverIcons = new ImageIcon[3];
+        for (int i = 0; i < 3; i++) {
+            gameOverIcons[i] = new ImageIcon("src/images/gameover" + i + ".jpg");
+        }
+
+        // JLabel erstellen, um die "Game Over"-Bilder anzuzeigen
+        JLabel gameOverLabel = new JLabel();
+        gameOverLabel.setHorizontalAlignment(SwingConstants.CENTER); // Horizontal zentriert
+        gameOverLabel.setVerticalAlignment(SwingConstants.CENTER); // Vertikal zentriert
+
+        // JLabel zum Panel hinzufügen
+        setLayout(new BorderLayout());
+        add(gameOverLabel, BorderLayout.CENTER); // In der Mitte des Panels platzieren
+
+
+        // Initialisieren und Starten des Timers für die "Game Over"-Animation
+        int animationDelay = 200; // Verzögerung zwischen den Bildern
+        Timer gameOverTimer = new Timer(animationDelay, new ActionListener() {
+            private int currentIndex = 0;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aktualisieren des JLabels mit dem aktuellen Bild
+                gameOverLabel.setIcon(gameOverIcons[currentIndex]);
+                currentIndex = (currentIndex + 1) % gameOverIcons.length;
+            }
+        });
+        gameOverTimer.start(); // Timer starten
+
+        // JButton erstellen, um das Spiel neu zu starten
+        JButton restartButton = new JButton("Spiel neu starten");
+        restartButton.setFont(new Font("Arial", Font.BOLD, 24)); // Schriftart und -größe festlegen
+        restartButton.addActionListener(e -> restartGame()); // ActionListener für den Button hinzufügen
+
+        // JPanel für den Button erstellen und zum unteren Rand des Panels hinzufügen
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Zentrierte Ausrichtung
+        buttonPanel.add(restartButton);
+        add(buttonPanel, BorderLayout.SOUTH);
+
+        // Panel neu zeichnen
+        revalidate();
+        repaint();
+
+        // Timer stoppen, um das Spiel zu pausieren
+        timer.stop();
+    }
 
 
 
 
-    
-
+    public void restartGame() {
+        Game.main(new String[0]);
+        SwingUtilities.getWindowAncestor(this).dispose();
+    }
 }
