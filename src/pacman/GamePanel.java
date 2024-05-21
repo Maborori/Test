@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements ActionListener {
         maze = new Maze();
         timer = new Timer(DELAY, this);
         ghosts = new ArrayList();
+
         spawnGhosts();
         spawnGhosts();
         spawnGhosts();
@@ -74,6 +75,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     @Override
     protected void paintComponent(Graphics g) {
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
         super.paintComponent(g);
         maze.draw(g);
         pacman.draw(g);
@@ -185,6 +193,8 @@ public void restartGame(){
     PacmanGame.main(new String[0]);
     SwingUtilities.getWindowAncestor(this).dispose();
 }
+
+
 
 
     
