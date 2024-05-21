@@ -1,7 +1,7 @@
 package pacman;
 import javax.swing.*;
 
-public class Game extends JFrame{
+public class PacmanGame extends JFrame{
 
     public void startGame(){
 
@@ -21,8 +21,6 @@ public class Game extends JFrame{
     
     // Make the window non-resizable
     frame.setResizable(false);
-
-    frame.setContentPane(new MainMenu());
     
     // Center the window on the screen
     frame.setLocationRelativeTo(null);
@@ -33,12 +31,11 @@ public class Game extends JFrame{
     // Start the game loop
     gamePanel.startGame();
 
-
     }
 
 
     public static void main(String[] args) {
-        Game game = new Game();
+        PacmanGame game = new PacmanGame();
         game.startGame();
         
     }
