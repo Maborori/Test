@@ -7,6 +7,9 @@ import java.util.Random;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 
 public class GamePanel extends JPanel implements ActionListener {
 
@@ -22,12 +25,14 @@ public class GamePanel extends JPanel implements ActionListener {
     private long deltaTime;
 
     public GamePanel() {
-        setPreferredSize(new Dimension(800, 500));
+        setPreferredSize(new Dimension(1080, 720));
         setBackground(Color.BLACK);
         pacman = new Pacman();
         maze = new Maze();
         timer = new Timer(DELAY, this);
         ghosts = new ArrayList();
+        spawnGhosts();
+        spawnGhosts();
         spawnGhosts();
         lastFrameTime = System.currentTimeMillis();
         
@@ -35,6 +40,15 @@ public class GamePanel extends JPanel implements ActionListener {
         InputHandler inputHandler = new InputHandler(pacman);
         addKeyListener(inputHandler);
         setFocusable(true);
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_R) {
+                    restartGame();
+                }
+            }
+        });
     }
 
     private void updateDeltaTime(){
@@ -47,7 +61,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // Spawn ghosts randomly
     int x = 522;
-    int y = 448;
+    int y = 300;
     for (int i = 0; i < NUM_GHOSTS; i++) {
             
             System.out.println("Spawning ghost " +i +"x: " +x + "y: " +y);
@@ -66,6 +80,18 @@ public class GamePanel extends JPanel implements ActionListener {
         for (Ghost ghost : ghosts) {
             ghost.draw(g);
         }
+    }
+
+    private boolean checkPacmanGhostCollision(){
+        Rectangle pacmanBounds = pacman.getBounds();
+        for (Ghost ghost : ghosts){
+            Rectangle ghostBounds = ghost.getBounds();
+            if(pacmanBounds.intersects(ghostBounds)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -107,6 +133,10 @@ public class GamePanel extends JPanel implements ActionListener {
     if(maze.allPelletsConsumed()){
         showWinScreen();
     }
+
+    if(checkPacmanGhostCollision()){
+        showLossScreen();
+    }
     }
 
     public void startGame(){
@@ -131,6 +161,30 @@ public class GamePanel extends JPanel implements ActionListener {
             // Stop the timer to pause the game
             timer.stop();
     }
+
+    private void showLossScreen(){
+        removeAll();
+
+// Add a label to display "You won!"
+        JLabel lossLabel = new JLabel("Du hast verloren!");
+        lossLabel.setForeground(Color.WHITE);
+        lossLabel.setFont(new Font("Arial", Font.BOLD, 36));
+        lossLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lossLabel.setVerticalAlignment(SwingConstants.CENTER);
+        add(lossLabel);
+        
+        // Repaint the panel
+        revalidate();
+        repaint();
+        
+        // Stop the timer to pause the game
+        timer.stop();
+}
+
+public void restartGame(){
+    PacmanGame.main(new String[0]);
+    SwingUtilities.getWindowAncestor(this).dispose();
+}
 
 
     

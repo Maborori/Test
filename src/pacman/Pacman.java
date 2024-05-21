@@ -69,8 +69,8 @@ public class Pacman extends GameObject {
     }
 
     public void move(int dx, int dy, Direction direction) {
-        this.dx = dx * 2;
-        this.dy = dy * 2;
+        this.dx = dx * 3;
+        this.dy = dy * 3;
 
         if (this.currentDirection != direction) {
             this.currentDirection = direction;
