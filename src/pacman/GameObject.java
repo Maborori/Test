@@ -20,6 +20,5 @@ public abstract class GameObject {
         return new Rectangle(x, y, width, height);
     }
 
-    //ss
 
 }
