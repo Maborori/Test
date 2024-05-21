@@ -1,11 +1,11 @@
 package pacman;
 import javax.swing.*;
 
-public class PacmanGame extends JFrame{
+public class Game extends JFrame{
 
     public void startGame(){
 
-    JFrame frame = new JFrame("Pacman Game");
+    JFrame frame = new JFrame("PacMan Game");
         
     // Set the default close operation so the game exits when the window is closed
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,8 +35,8 @@ public class PacmanGame extends JFrame{
 
 
     public static void main(String[] args) {
-        PacmanGame pacmanGame = new PacmanGame();
-        pacmanGame.startGame();
+        Game game = new Game();
+        game.startGame();
         
     }
 }

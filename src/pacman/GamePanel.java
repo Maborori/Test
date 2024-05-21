@@ -2,8 +2,6 @@ package pacman;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
         pacman = new Pacman();
         maze = new Maze();
         timer = new Timer(DELAY, this);
-        ghosts = new ArrayList();
+        ghosts = new ArrayList<>();
 
         spawnGhosts();
         spawnGhosts();
@@ -61,7 +59,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private void spawnGhosts() {
 
     // Spawn ghosts randomly
-    int x = 522;
+    int x = 520;
     int y = 300;
     for (int i = 0; i < NUM_GHOSTS; i++) {
             
@@ -190,7 +188,7 @@ public class GamePanel extends JPanel implements ActionListener {
 }
 
 public void restartGame(){
-    PacmanGame.main(new String[0]);
+    Game.main(new String[0]);
     SwingUtilities.getWindowAncestor(this).dispose();
 }
 
