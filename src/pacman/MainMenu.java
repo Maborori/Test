@@ -7,13 +7,16 @@ import java.awt.event.ActionListener;
 
 public class MainMenu extends JPanel {
     private JButton playButton, optionButton, exitButton;
+    private Image backgroundImage;
 
     public MainMenu() {
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 10, 10, 10);
 
-        setBackground(Color.BLACK);
+        // Hintergrundbild laden
+        backgroundImage = new ImageIcon("src/images/backgroundMenu.png").getImage();
+
         setPreferredSize(new Dimension(1080, 720));
 
         // Lade und füge das Titelbild hinzu
@@ -76,6 +79,12 @@ public class MainMenu extends JPanel {
         });
         constraints.gridy = 3;
         add(exitButton, constraints);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 
     private JButton createButton(ImageIcon icon0, ImageIcon icon1, ImageIcon icon2) {
