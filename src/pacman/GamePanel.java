@@ -11,32 +11,37 @@ import java.util.ArrayList;
 public class GamePanel extends JPanel implements ActionListener {
 
     private ArrayList<Ghost> ghosts;
-    private static final int SPAWN_INTERVAL = 5000;
     private static final int NUM_GHOSTS = 4;
-    private int spawnTimer = 0;
     private Timer timer;
     private Pacman pacman;
     private Maze maze;
-    private final int DELAY = 16; // Delay for ~60 FPS
-    private long lastFrameTime;
-    private long deltaTime;
+    private final int DELAY = 16; // Verzögert den Timer des Spiels um 16 Millisekunden, sodass eine stabile Bildrate gewährleistet wird
+    
 
     public GamePanel() {
+
+        // Bestimmung der Bildgröße
         setPreferredSize(new Dimension(1080, 720));
         setBackground(Color.BLACK);
+
+        // Initialisierung der Pacman-, Labyrinth- und Timerklasse
         pacman = new Pacman();
         maze = new Maze();
         timer = new Timer(DELAY, this);
+
         ghosts = new ArrayList<>();
 
+        // Durch den Aufruf dieser Methode werden die Geister innerhalb des Spielfelds als physische Elemente erzeugt
         spawnGhosts();
-        lastFrameTime = System.currentTimeMillis();
 
-        // Add key listener for controlling Pacman
+        // Verwendung eines Key Listeners und eines Inputhandlers, welche die Steuerung von Pacman implementieren
         InputHandler inputHandler = new InputHandler(pacman);
         addKeyListener(inputHandler);
+
+        // Ermöglicht es dem JPanel(GamePanel) auf die Tastatureingaben des Key Listeners zu reagieren
         setFocusable(true);
 
+        // Verwendung eines weiteren Key Listeners, sodass mit der Taste 'R' das Spiel jederzeit neugestartet werden kann
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -47,16 +52,14 @@ public class GamePanel extends JPanel implements ActionListener {
         });
     }
 
-    private void updateDeltaTime() {
-        long currentTime = System.currentTimeMillis();
-        deltaTime = currentTime - lastFrameTime;
-        lastFrameTime = currentTime;
-    }
-
+    // Methode zur Erzeugung der Geister innerhalb des Spiel
     private void spawnGhosts() {
-        // Spawn ghosts randomly
+
+        // Koordinaten, die angeben, wo die Geister erzeugt werden
         int x = 520;
         int y = 300;
+
+        // Erstellung einer for-Schleife, um jeden einzelnen Geist zu erzeugen und jedem Geist eine individuelle Farbe (wird durch die jeweilige Bilddatei angegeben) zuzuweisen
         for (int i = 0; i < NUM_GHOSTS; i++) {
             System.out.println("Spawning ghost " + i + "x: " + x + "y: " + y);
             String imagePath = String.format("/images/ghost_%d.png", i);
@@ -65,7 +68,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-    @Override
+    // Sorgt dafür, dass die Spielgrafiken und Spielelemente gezeichnet, bzw. generiert werden
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
@@ -81,6 +84,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    // Uberprüft auf Kollisionen zwischen Pacman und den Geistern
     private boolean checkPacmanGhostCollision() {
         Rectangle pacmanBounds = pacman.getBounds();
         for (Ghost ghost : ghosts) {
@@ -92,58 +96,53 @@ public class GamePanel extends JPanel implements ActionListener {
         return false;
     }
 
-    @Override
+    // Gibt an was passiert, wenn ein ActionEvent durch den Timer ausgelöst wird
     public void actionPerformed(ActionEvent e) {
         updateGame();
         repaint();
     }
 
     private void updateGame() {
-        // Store Pacman's current position before updating
+
+        // Erstellung von Variablen, um die Position von Pacman zu speichern
         int oldX = pacman.getX();
         int oldY = pacman.getY();
 
-        spawnTimer += deltaTime;
-        if (spawnTimer >= SPAWN_INTERVAL) {
-            spawnGhosts();
-            spawnTimer = 0; // Reset timer
-        }
-
+        //Aktualisierung der Position der Geister und von Pacman 
         for (Ghost ghost : ghosts) {
             ghost.update();
         }
 
-        // Update Pacman's position
         pacman.update();
 
-        // Check for collisions with walls
+        // Setzt die Position von Pacman bei der Kollision mit einer Wand auf die vorherige zurück
         if (maze.checkWallCollision(pacman.getBounds())) {
-            // Restore Pacman's previous position
             pacman.setPosition(oldX, oldY);
         }
 
-        // Check for collisions with pellets
+        // Ermöglicht Pacman das "Essen" der Perlen, wenn er mit ihnen kollidiert
         if (maze.checkPelletCollision(pacman.getBounds())) {
-            // Handle collision with pellet
         }
 
+        // Zeigt die Siegesmeldung an, wenn alle Perlen "gegessen" wurden 
         if (maze.allPelletsConsumed()) {
             showWinScreen();
         }
 
+        // Zeigt die Niederlagemeldung an, wenn Pacman mit einem Geist kollidiert
         if (checkPacmanGhostCollision()) {
             showLossScreen();
         }
     }
 
+    // Startet den Spiel-Timer
     public void startGame() {
         timer.start();
-    }
+    } 
 
+    // Zeigt den Gewinnbildschirm an, wenn alle Perlen gesammelt wurden
     private void showWinScreen() {
-        removeAll();
 
-        // Add a label to display "Du hast gewonnen!"
         JLabel winLabel = new JLabel("Du hast gewonnen!");
         winLabel.setForeground(Color.WHITE);
         winLabel.setFont(new Font("Arial", Font.BOLD, 36));
@@ -151,18 +150,16 @@ public class GamePanel extends JPanel implements ActionListener {
         winLabel.setVerticalAlignment(SwingConstants.CENTER);
         add(winLabel);
 
-        // Repaint the panel
         revalidate();
         repaint();
 
-        // Stop the timer to pause the game
         timer.stop();
     }
 
+    // Zeigt den Niederlagebildschirm an, wenn alle Perlen gesammelt wurden
     private void showLossScreen() {
-        removeAll();
 
-        // Load the "gameover" sprite
+        // Lädt die Bilddatei, die für die "Gameover" Anzeige erforderlich ist
         ImageIcon gameOverIcon = new ImageIcon("src/images/gameover.png");
 
         // Adjust the size of the gameOverIcon
@@ -252,6 +249,7 @@ public class GamePanel extends JPanel implements ActionListener {
         frame.repaint();
     }
 
+    // Startet das Spiel neu
     public void restartGame() {
         GamePanel gamePanel = new GamePanel();
         gamePanel.startGame();
