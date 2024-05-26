@@ -16,7 +16,7 @@ public class Pacman extends GameObject {
     private int animationCounter = 0;
 
     public Pacman() {
-        super(50, 50, 30, 30); // Initialize the position and size using the constructor of GameObject
+        super(50, 50, 16, 16); // Initialize the position and size using the constructor of GameObject
         animations = new HashMap<>();
         loadAnimations();
         currentDirection = Direction.RIGHT; // Default direction
