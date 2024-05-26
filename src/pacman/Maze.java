@@ -1,7 +1,7 @@
 package pacman;
+
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -33,7 +33,7 @@ public class Maze {
                 {1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-    
+
         };
 
         walls = new ArrayList<>();
@@ -79,15 +79,14 @@ public class Maze {
     }
 
 
-
     public Point findValidSpawnLocation() {
         Random random = new Random();
         int maxAttempts = 100;
-    
+
         for (int attempt = 0; attempt < maxAttempts; attempt++) {
             int x = random.nextInt(mazeStructure[0].length);
             int y = random.nextInt(mazeStructure.length);
-    
+
             if (mazeStructure[y][x] == 2) { // Check if the spot is an open space
                 // Calculate the center of the open space
                 int centerX = x * CELL_SIZE + CELL_SIZE / 2;
@@ -109,9 +108,9 @@ public class Maze {
         return false;
     }
 
-    public boolean allPelletsConsumed(){
+    public boolean allPelletsConsumed() {
         return pellets.isEmpty();
-        
+
     }
 
 }

@@ -17,7 +17,7 @@ public class Ghost extends GameObject {
     private static final int MAX_MOVE_COUNT = 60; // Max counter before changing direction
     private static final int[] VALID_DIRECTIONS = {0, 90, 180, 270}; // Valid angles for directions
     private Random random; // Random number generator
-    
+
     public Ghost(int x, int y, String imagePath, Maze maze) {
         super(x, y, 20, 20); // Adjust the size and position as needed
         this.maze = maze;
@@ -26,8 +26,7 @@ public class Ghost extends GameObject {
         chooseRandomDirection();
     }
 
-    
-    
+
     private void loadImage(String imagePath) {
         try {
             URL imageUrl = getClass().getResource(imagePath);
@@ -62,9 +61,9 @@ public class Ghost extends GameObject {
         x += dx;
         y += dy;
 
-        Rectangle ghostRect = new Rectangle(x,y, 20, 20);
+        Rectangle ghostRect = new Rectangle(x, y, 20, 20);
 
-        if(maze.checkWallCollision(ghostRect)){
+        if (maze.checkWallCollision(ghostRect)) {
             x = oldX;
             y = oldY;
             chooseRandomDirection();
@@ -97,8 +96,8 @@ public class Ghost extends GameObject {
                 dy = speed;
                 break;
         }
-        
-        
+
+
     }
 
     public int getX() {

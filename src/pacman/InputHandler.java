@@ -1,9 +1,10 @@
 package pacman;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class InputHandler extends KeyAdapter {
-    private Pacman pacman;
+    private final Pacman pacman;
 
     public InputHandler(Pacman pacman) {
         this.pacman = pacman;
@@ -15,13 +16,13 @@ public class InputHandler extends KeyAdapter {
 
         switch (key) {
             case KeyEvent.VK_LEFT:
-                pacman.move(-2, 0,Direction.LEFT); // Move left
+                pacman.move(-2, 0, Direction.LEFT); // Move left
                 break;
             case KeyEvent.VK_RIGHT:
                 pacman.move(2, 0, Direction.RIGHT); // Move right
                 break;
             case KeyEvent.VK_UP:
-                pacman.move(0, -2,Direction.UP); // Move up
+                pacman.move(0, -2, Direction.UP); // Move up
                 break;
             case KeyEvent.VK_DOWN:
                 pacman.move(0, 2, Direction.DOWN); // Move down

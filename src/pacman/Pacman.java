@@ -1,11 +1,11 @@
 package pacman;
 
-import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Pacman extends GameObject {
     private int dx, dy; // Movement deltas
@@ -16,7 +16,7 @@ public class Pacman extends GameObject {
     private int animationCounter = 0;
 
     public Pacman() {
-        super(50, 50, 20, 20); // Initialize the position and size using the constructor of GameObject
+        super(50, 50, 30, 30); // Initialize the position and size using the constructor of GameObject
         animations = new HashMap<>();
         loadAnimations();
         currentDirection = Direction.RIGHT; // Default direction
@@ -38,11 +38,11 @@ public class Pacman extends GameObject {
     private Image[] loadAnimationImages(String baseName, int count) throws IOException {
         Image[] images = new Image[count];
         for (int i = 0; i < count; i++) {
-            String imagePath = baseName + i +".png";
+            String imagePath = baseName + i + ".png";
             URL imageUrl = getClass().getResource(imagePath);
-            System.out.println("Loading image: " +imagePath +" from URL: " +imageUrl);
-            if(imageUrl.equals(null)){
-                throw new IOException("Image not found: " +imagePath);
+            System.out.println("Loading image: " + imagePath + " from URL: " + imageUrl);
+            if (imageUrl.equals(null)) {
+                throw new IOException("Image not found: " + imagePath);
             }
             images[i] = ImageIO.read(imageUrl);
         }
@@ -56,6 +56,8 @@ public class Pacman extends GameObject {
 
     @Override
     public void update() {
+        x += dx;
+        y += dy;
 
         animationCounter++;
         if (animationCounter >= animationDelay) {
@@ -63,19 +65,12 @@ public class Pacman extends GameObject {
             currentImageIndex = (currentImageIndex + 1) % animations.get(currentDirection).length;
             animationCounter = 0; // Reset animation counter
         }
-
-        x += dx;
-        y += dy;
     }
 
     public void move(int dx, int dy, Direction direction) {
         this.dx = dx * 3;
         this.dy = dy * 3;
-
-        if (this.currentDirection != direction) {
-            this.currentDirection = direction;
-            this.currentImageIndex = 0; // Reset animation to first image when direction changes
-        }
+        this.currentDirection = direction;
     }
 
     // Getters and setters for position
