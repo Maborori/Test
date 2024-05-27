@@ -5,36 +5,36 @@ import javax.swing.*;
 public class Game extends JFrame {
 
     public void startGame() {
-
+        // Erstelle ein neues JFrame-Fenster mit dem Titel "PacMan Game"
         JFrame frame = new JFrame("PacMan Game");
 
-
-        // Set the default close operation so the game exits when the window is closed
+        // Setze die Standard-Schließoperation, damit das Spiel beendet wird, wenn das Fenster geschlossen wird
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Create an instance of the GamePanel, which will contain the game logic and graphics
+        // Erstelle eine Instanz des MainMenu, das die Spiel-Logik und Grafik enthalten wird
         MainMenu mainMenu = new MainMenu();
 
-        // Add the game panel to the frame
+        // Füge das MainMenu-Panel zum Frame hinzu
         frame.add(mainMenu);
 
-        // Pack the frame to fit the preferred size and layout of its components
+        // Passe das Frame an die bevorzugte Größe und das Layout seiner Komponenten an
         frame.pack();
 
-        // Make the window non-resizable
+        // Mache das Fenster nicht veränderbar
         frame.setResizable(false);
 
-        // Center the window on the screen
+        // Zentriere das Fenster auf dem Bildschirm
         frame.setLocationRelativeTo(null);
 
-        // Make the window visible
+        // Mache das Fenster sichtbar
         frame.setVisible(true);
-
     }
 
     public static void main(String[] args) {
+        // Erstelle eine Instanz des Spiels
         Game game = new Game();
-        game.startGame();
 
+        // Starte das Spiel
+        game.startGame();
     }
 }
