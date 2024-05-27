@@ -23,15 +23,12 @@ public class InputHandler extends KeyAdapter {
         switch (key) {
             case KeyEvent.VK_LEFT:
                 pacman.move(-2, 0, Direction.LEFT); // Bewegt Pacman nach links
-                
                 break;
             case KeyEvent.VK_RIGHT:
                 pacman.move(2, 0, Direction.RIGHT); // Bewegt Pacman nach rechts
-                
                 break;
             case KeyEvent.VK_UP:
                 pacman.move(0, -2, Direction.UP); // Bewegt Pacman nach oben
-                
                 break;
             case KeyEvent.VK_DOWN:
                 pacman.move(0, 2, Direction.DOWN); // Bewegt Pacman nach unten
