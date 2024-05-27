@@ -10,15 +10,15 @@ import java.util.Map;
 // Die Pacman-Klasse erbt von GameObject
 public class Pacman extends GameObject {
     // Bewegungsdeltas
-    private int dx, dy; 
+    private int dx, dy;
     // Map zur Speicherung der Animationen für jede Richtung
-    private Map<Direction, Image[]> animations; 
+    private Map<Direction, Image[]> animations;
     // Aktuelle Bewegungsrichtung
-    public Direction currentDirection; 
+    public Direction currentDirection;
     // Index des aktuellen Bildes in der Animation
-    private int currentImageIndex; 
+    private int currentImageIndex;
     // Verzögerung zwischen den Animationsframes
-    private int animationDelay = 10; 
+    private int animationDelay = 10;
     // Zähler für die Animation
     private int animationCounter = 0;
 
