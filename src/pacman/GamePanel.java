@@ -108,7 +108,7 @@ public class GamePanel extends JPanel implements ActionListener {
         int oldX = pacman.getX();
         int oldY = pacman.getY();
 
-        //Aktualisierung der Position der Geister und von Pacman 
+        //Aktualisierung der Position und Bewegung der Geister und von Pacman 
         for (Ghost ghost : ghosts) {
             ghost.update();
         }
