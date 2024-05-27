@@ -8,7 +8,7 @@ import java.awt.event.ActionListener; // Importiert ActionListener für Ereignis
 public class MainMenu extends JPanel { // Deklariert die Klasse MainMenu, die JPanel erweitert
 
     // Deklaration der Schaltflächen und des Hintergrundbilds
-    private JButton playButton, optionButton, exitButton; // Schaltflächen für Play, Option und Exit
+    private JButton playButton, exitButton; // Schaltflächen für Play, Option und Exit
     private Image backgroundImage; // Hintergrundbild für das Hauptmenü
 
     public MainMenu() { // Konstruktor für das Hauptmenü

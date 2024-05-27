@@ -3,7 +3,6 @@ package pacman;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Maze {
 
@@ -13,8 +12,6 @@ public class Maze {
     private final List<Rectangle> walls;
     // Liste, die die Positionen der Pellets als Rechtecke speichert
     private final List<Rectangle> pellets;
-    // Konstante für die Größe jeder Zelle im Labyrinth
-    private final int CELL_SIZE = 36;
 
     // Konstruktor, der die Struktur des Labyrinths, die Wände und die Pellets initialisiert
     public Maze() {
@@ -95,30 +92,7 @@ public class Maze {
         }
         return false; // Keine Kollision gefunden, daher false zurückgeben
     }
-
-    // Methode zur Suche nach einer gültigen Startposition für den Spieler
-    public Point findValidSpawnLocation() {
-        Random random = new Random(); // Initialisierung eines Zufallszahlengenerators
-        int maxAttempts = 100; // Maximale Anzahl von Versuchen, eine gültige Position zu finden
-
-        // Iteration über eine begrenzte Anzahl von Versuchen
-        for (int attempt = 0; attempt < maxAttempts; attempt++) {
-            // Zufällige Auswahl einer Position im Labyrinth
-            int x = random.nextInt(mazeStructure[0].length);
-            int y = random.nextInt(mazeStructure.length);
-
-            // Überprüfen, ob die ausgewählte Position ein leerer Raum ist (Pellet)
-            if (mazeStructure[y][x] == 2) {
-                // Berechnen des Zentrums des leeren Raums
-                int centerX = x * CELL_SIZE + CELL_SIZE / 2;
-                int centerY = y * CELL_SIZE + CELL_SIZE / 2;
-                return new Point(centerX, centerY); // Rückgabe der gefundenen Position
-            }
-        }
-        // Falls keine gültige Startposition gefunden wurde, null zurückgeben
-        return null;
-    }
-
+    
     // Methode zur Überprüfung auf Kollision mit Pellets und deren Entfernung bei Kollision
     public boolean checkPelletCollision(Rectangle rect) {
         // Iteration über alle Pellets im Labyrinth
