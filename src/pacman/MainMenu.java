@@ -57,21 +57,6 @@ public class MainMenu extends JPanel { // Deklariert die Klasse MainMenu, die JP
         constraints.insets = new Insets(10, 10, 10, 10); // Rückkehr zu den Standard-Inset-Werten
         add(playButton, constraints); // Fügt den Play-Button dem Panel hinzu
 
-        // Lädt und skaliert die Option-Button-Bilder
-        ImageIcon optionButtonIcon0 = scaleImageIcon(new ImageIcon("src/images/option0.png"), 2); // Normales Icon
-        ImageIcon optionButtonIcon1 = scaleImageIcon(new ImageIcon("src/images/option1.png"), 2); // Rollover-Icon
-        ImageIcon optionButtonIcon2 = scaleImageIcon(new ImageIcon("src/images/option2.png"), 2); // Gedrücktes Icon
-        optionButton = createButton(optionButtonIcon0, optionButtonIcon1, optionButtonIcon2); // Erstellt den Option-Button
-        // Fügt einen ActionListener zum Option-Button hinzu
-        optionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Aktion des Option-Buttons wird hier definiert
-            }
-        });
-        constraints.gridy = 2; // Setzt die y-Position der Komponente auf die dritte Zeile
-        add(optionButton, constraints); // Fügt den Option-Button dem Panel hinzu
-
         // Lädt und skaliert die Exit-Button-Bilder
         ImageIcon exitButtonIcon0 = scaleImageIcon(new ImageIcon("src/images/quit0.png"), 2); // Normales Icon
         ImageIcon exitButtonIcon1 = scaleImageIcon(new ImageIcon("src/images/quit1.png"), 2); // Rollover-Icon
@@ -117,4 +102,5 @@ public class MainMenu extends JPanel { // Deklariert die Klasse MainMenu, die JP
         Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH); // Skaliert das Bild mit glatter Skalierung
         return new ImageIcon(scaledImg); // Gibt ein neues ImageIcon mit dem skalierten Bild zurück
     }
+
 }

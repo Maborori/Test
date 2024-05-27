@@ -136,5 +136,4 @@ public class Maze {
     public boolean allPelletsConsumed() {
         return pellets.isEmpty(); // Rückgabe, ob die Liste der Pellets leer ist (alle verbraucht)
     }
-
 }

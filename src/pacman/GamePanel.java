@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements ActionListener {
         });
     }
 
-    // Methode zur Erzeugung der Geister innerhalb des Spiel
+    // Methode zur Erzeugung der Geister innerhalb des Spiels
     private void spawnGhosts() {
 
         // Koordinaten, die angeben, wo die Geister erzeugt werden
@@ -139,7 +139,6 @@ public class GamePanel extends JPanel implements ActionListener {
         timer.start();
     }
 
-    // Zeigt den Gewinnbildschirm an, wenn alle Perlen gesammelt wurden
     private void showWinScreen() {
 
         JLabel winLabel = new JLabel("Du hast gewonnen!");

@@ -7,16 +7,16 @@ import java.net.URL;
 import java.util.Random;
 
 public class Ghost extends GameObject {
-    private Image image; 
+    private Image image;
     private Maze maze;
-    private int dx, dy; 
-    private int speed = 8; 
+    private int dx, dy;
+    private int speed = 8;
     private Direction currentDirection;
-    private Direction nextDirection; 
+    private Direction nextDirection;
     private int moveCounter;
-    private static final int MAX_MOVE_COUNT = 60; 
-    private static final int[] VALID_DIRECTIONS = {0, 90, 180, 270}; 
-    private Random random; 
+    private static final int MAX_MOVE_COUNT = 60;
+    private static final int[] VALID_DIRECTIONS = {0, 90, 180, 270};
+    private Random random;
 
     // Konstruktor für die Erzeugung eines einzelnen Geists
     public Ghost(int x, int y, String imagePath, Maze maze) {
@@ -53,7 +53,7 @@ public class Ghost extends GameObject {
     // Bestimmt die Bewegung des Geists
     private void move() {
 
-         // Speichert die alte X- und Y-Position der Geister
+        // Speichert die alte X- und Y-Position der Geister
         int oldX = x;
         int oldY = y;
 
@@ -97,8 +97,6 @@ public class Ghost extends GameObject {
                 dy = speed;
                 break;
         }
-
-
     }
 
     // Zwei Methoden (Getter) zur Rückgabe der aktuellen X- und Y-Position
@@ -112,7 +110,7 @@ public class Ghost extends GameObject {
 
     // Methode zur Auswahl einer zufälligen Richtung
     private void chooseRandomDirection() {
-        
+
         int angle = VALID_DIRECTIONS[random.nextInt(VALID_DIRECTIONS.length)];
         switch (angle) {
             case 0:
@@ -129,7 +127,6 @@ public class Ghost extends GameObject {
                 break;
         }
 
-        
         if (!isOppositeDirection(nextDirection)) {
             currentDirection = nextDirection;
         }
