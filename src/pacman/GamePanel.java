@@ -61,7 +61,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // Erstellung einer for-Schleife, um jeden einzelnen Geist zu erzeugen und jedem Geist eine individuelle Farbe (wird durch die jeweilige Bilddatei angegeben) zuzuweisen
         for (int i = 0; i < NUM_GHOSTS; i++) {
-            System.out.println("Spawning ghost " + i + "x: " + x + "y: " + y);
             String imagePath = String.format("/images/ghost_%d.png", i);
             Ghost ghost = new Ghost(x, y, imagePath, maze); // Adjust image path as needed
             ghosts.add(ghost);
